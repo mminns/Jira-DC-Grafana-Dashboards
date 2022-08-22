@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+    jmxexporter:
+      image: sscaling/jmx-prometheus-exporter
+      ports:
+        - 5556:5556
+      volumes:
+        - ../jmx-exporter/config.yml:/opt/jmx_exporter/config.yml
+    prometheus:
+      image: prom/prometheus
+      ports:
+        - 9090:9090
+      volumes:
+        - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    grafana:
+      image: grafana/grafana-oss
+      ports:
+        - 3000:3000
+     

@@ -219,7 +219,7 @@
       },
       "pluginVersion": "8.3.6",
       "targets": [
-        {
+        { 
           "datasource": {
             "type": "prometheus",
             "uid": "${query0}"
