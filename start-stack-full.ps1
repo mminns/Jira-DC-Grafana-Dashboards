@@ -1,0 +1,1 @@
+docker-compose -p "atlassian-monitoring_stack_full" -f ./docker/docker-compose.yml up -d --remove-orphans
