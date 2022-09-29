@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+    jmxexporter:
+      image: sscaling/jmx-prometheus-exporter
+      ports:
+        - 5556:5556
+      volumes:
+        - ../jmx-exporter/config.yml:/opt/jmx_exporter/config.yml
+
+     
