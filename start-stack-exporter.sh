@@ -1,1 +1,1 @@
-docker-compose -p "atlassian-monitoring_stack_exporter" -f ./docker/docker-compose-exporter.yml up -d --remove-orphans
+docker compose -p "atlassian-monitoring_stack_exporter" -f ./docker/docker-compose-exporter.yml up -d --remove-orphans
