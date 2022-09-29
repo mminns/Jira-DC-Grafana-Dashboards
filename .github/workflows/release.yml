@@ -17,14 +17,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Archive Release
+    - name: Archive Release - Full Stack
       uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
-        filename: 'atlassian-monitoring-stack-for-jira.zip'
+        filename: 'atlassian-monitoring-stack-for-jira-full.zip'
         exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md'
+    - uses: actions/checkout@master
+    - name: Archive Release - Exporter Stack
+      uses: thedoctor0/zip-release@main
+      with:
+        type: 'zip'
+        filename: 'atlassian-monitoring-stack-for-jira-exporter.zip'
+        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md docker/docker-compose.yml docker/docker-compose-reporter.yml grafana prometheus start-stack-full.* start-stack-reporter.*'
+    - uses: actions/checkout@master
+    - name: Archive Release - Reporting Stack
+      uses: thedoctor0/zip-release@main
+      with:
+        type: 'zip'
+        filename: 'atlassian-monitoring-stack-for-jira-reporter.zip'
+        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md docker/docker-compose.yml docker/docker-compose-exporter.yml jmx-exporter  start-stack-full.* start-stack-exporter.*'
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "atlassian-monitoring-stack-for-jira.zip"
+        artifacts: "atlassian-monitoring-stack-*.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
