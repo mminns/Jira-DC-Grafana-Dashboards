@@ -36,9 +36,9 @@ jobs:
       with:
         type: 'zip'
         filename: 'atlassian-monitoring-stack-for-jira-reporter.zip'
-        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md docker/docker-compose.yml docker/docker-compose-exporter.yml jmx-exporter  start-stack-full.* start-stack-exporter.*'
+        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md docker/docker-compose.yml docker/docker-compose-exporter.yml jmx-exporter  start-stack-full.* start-stack-exporter.*' 
     - name: Upload Release
-      uses: ncipollo/release-action@v1
+    - uses: ncipollo/release-action@v1
       with:
-        artifacts: "atlassian-monitoring-stack-*.zip"
+        artifacts: "atlassian-monitoring-stack-for-jira-full.zip, atlassian-monitoring-stack-for-jira--reporter.zip, atlassian-monitoring-stack-for-jira--exporter.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
