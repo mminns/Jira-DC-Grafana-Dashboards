@@ -34,3 +34,15 @@ jobs:
         run: |
           echo Add other actions to build, for this branch
           echo test, and deploy your project.
+
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Archive Release
+      uses: thedoctor0/zip-release@main
+      with:
+        type: 'zip'
+        filename: 'release.zip'
+        exclusions: '*.git* *.atlassian*'
+        recursive_exclusions: '*.md cache-clearing.json cluster-locks.json'
