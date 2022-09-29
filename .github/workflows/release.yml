@@ -40,5 +40,5 @@ jobs:
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "atlassian-monitoring-stack-for-jira-full.zip, atlassian-monitoring-stack-for-jira--reporter.zip, atlassian-monitoring-stack-for-jira--exporter.zip"
+        artifacts: "*.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
