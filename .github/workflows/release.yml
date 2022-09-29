@@ -28,27 +28,3 @@ jobs:
       with:
         artifacts: "*.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/checkout@master
-    - name: Archive Release - Exporter Stack
-      uses: thedoctor0/zip-release@main
-      with:
-        type: 'zip'
-        filename: 'atlassian-monitoring-stack-for-jira-exporter.zip'
-        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md docker/docker-compose.yml docker/docker-compose-reporter.yml grafana prometheus start-stack-full.* start-stack-reporter.*'
-    - name: Upload Release - Exporter Stack
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "*.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/checkout@master
-    - name: Archive Release - Reporting Stack
-      uses: thedoctor0/zip-release@main
-      with:
-        type: 'zip'
-        filename: 'atlassian-monitoring-stack-for-jira-reporter.zip'
-        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md docker/docker-compose.yml docker/docker-compose-exporter.yml jmx-exporter  start-stack-full.* start-stack-exporter.*' 
-    - name: Upload Release - Reporting Stack
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "*.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
