@@ -46,3 +46,8 @@ jobs:
         filename: 'release.zip'
         exclusions: '*.git* *.atlassian*'
         recursive_exclusions: '*.md cache-clearing.json cluster-locks.json'
+    - name: Upload Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "release.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
