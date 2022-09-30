@@ -22,7 +22,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'atlassian-monitoring-stack-for-jira-full.zip'
-        exclusions: '*.git* *.atlassian* *.md *.json docs/Development.md'
+        exclusions: '*.git* *.atlassian* *.md docs/Development.md'
     - name: Upload Release - Full Stack
       uses: ncipollo/release-action@v1
       with:
