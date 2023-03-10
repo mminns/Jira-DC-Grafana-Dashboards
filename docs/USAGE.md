@@ -16,7 +16,7 @@ This two components allow for a single installation of the reporting stack and a
 
 1. Make a copy `./jmx-exporter/config.yml` for each Jira node, e.g. `./jmx-exporter/{node number}-config.yml`
 1. [Configure the JMX Exporter](#Configure-the-JMX-Exporter) to monitor each Jira node using the copied `./jmx-exporter/config.yml` files.
-1. Run the exporter stack for each node using the node specifi `./jmx-exporter/config.yml` e.g.
+1. Run the exporter stack for each node using the node specific `./jmx-exporter/config.yml` e.g.
     1. `./start-stack-exporter.sh ./jmx-exporter/{node number}-config.yml`
 
 

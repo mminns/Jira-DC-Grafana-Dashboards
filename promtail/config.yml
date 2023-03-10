@@ -1,0 +1,65 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: IPD
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: ipd
+      __path__: /var/log/*log
+  # https://grafana.com/docs/loki/latest/clients/promtail/pipelines/
+  pipeline_stages:
+
+  # This stage is only going to run if the scraped target has "IPDMONITORING".
+  - match:
+      selector: '{job="ipd"}'
+      stages:
+      # The regex stage parses out a level, timestamp, and component. At the end
+      # of the stage, the values for level, timestamp, and component are only
+      # set internally for the pipeline. Future stages can use these values and
+      # decide what to do with them.
+      - regex:
+          expression: '.*\"timestamp\":\"(?P<timestamp>[0-9]*)\".*\"label\":\"(?P<label>[A-Z\.]*)\".*\"_value\":\"(?P<ipdvalue>[0-9\.]*).*'
+
+      # The labels stage takes the level and component entries from the previous
+      # regex stage and promotes them to a label. For example, level=error may
+      # be a label added by this stage.
+      - labels:
+          label:
+          ipdvalue:
+
+      # Finally, the timestamp stage takes the timestamp extracted from the
+      # regex stage and promotes it to be the new timestamp of the log entry,
+      # parsing it as an RFC3339Nano-formatted value.
+      # https://grafana.com/docs/loki/latest/clients/promtail/stages/timestamp/
+      - timestamp:
+          format: Unix
+          source: timestamp
+      # https://grafana.com/docs/loki/latest/clients/promtail/stages/metrics/#gauge
+      - metrics:
+          abcd:
+            type: Gauge
+            description: "the (gauge) value"
+            source: ipdvalue
+            config:
+              action: set
+          line_count_total:
+              config:
+                  action: inc
+                  match_all: true
+              description: A running counter of all lines with their corresponding
+                  labels
+              type: Counter
+      # https://grafana.com/docs/loki/latest/clients/promtail/stages/output/
+      - output:
+          source: abcd
+  

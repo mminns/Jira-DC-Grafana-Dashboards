@@ -1,21 +1,48 @@
 version: "3.7"
+
+networks:
+  atlasmonitoring:
+
 services:
+    loki:
+      image: grafana/loki:2.7.4
+      ports:
+        - "3100:3100"
+      command: -config.file=/etc/loki/local-config.yaml
+      networks:
+        - atlasmonitoring
+    promtail:
+      image: grafana/promtail:2.7.4
+      ports:
+        - 9080:9080
+      volumes:
+        - /Users/mminns/projects/stash.atlassian.com/jiraserver/jira/jirahome/log:/var/log
+        - ../promtail/config.yml:/etc/promtail/config.yml
+      command: -config.file=/etc/promtail/config.yml
+      networks:
+        - atlasmonitoring
     jmxexporter:
       image: sscaling/jmx-prometheus-exporter
       ports:
         - 5556:5556
       volumes:
         - ../jmx-exporter/config.yml:/opt/jmx_exporter/config.yml
+      networks:
+        - atlasmonitoring
     prometheus:
       image: prom/prometheus
       ports:
         - 9090:9090
       volumes:
         - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      networks:
+        - atlasmonitoring
     grafana:
       image: grafana/grafana-oss
       ports:
         - 3000:3000
       volumes:
         - ../grafana/provisioning:/etc/grafana/provisioning
+      networks:
+        - atlasmonitoring
      
